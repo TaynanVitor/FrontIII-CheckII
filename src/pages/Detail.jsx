@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import DetailCard from '../Components/DetailCard'
-import { DentistaContext } from '../contexts/DentistaProvider'
+import { DentistaContext } from '../contexts/DentistaContext'
 
 const Detail = () => {
   const { dentista, getDentista } = useContext(DentistaContext)
@@ -12,4 +12,4 @@ const Detail = () => {
   )
 }
 
-export default Detail
+export default Detail;

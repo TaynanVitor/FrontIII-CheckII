@@ -1,5 +1,3 @@
-
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Contato } from './pages/Contato'
 import Detail from './pages/Detail'
@@ -7,11 +5,14 @@ import Home from './pages/Home'
 import Navbar from './Components/Navbar/index.jsx'
 import Footer from './Components/Footer'
 import LoginForm from './Components/LoginForm'
-import { DentistaProvider } from './contexts/DentistaProvider'
+import { DentistaProvider } from './contexts/DentistaContext'
 import { Destacados } from './pages/Destacados'
+import { AuthContext } from './contexts/AuthContext'
+import AuthProvider from './contexts/AuthContext'
 
 export function App() {
   return (
+    <AuthProvider>
     <DentistaProvider>
       <BrowserRouter>
         <Navbar />
@@ -27,6 +28,7 @@ export function App() {
         <Footer />
       </BrowserRouter>
     </DentistaProvider>
+    </AuthProvider>
   )
 }
 

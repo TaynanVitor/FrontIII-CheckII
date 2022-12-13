@@ -1,7 +1,18 @@
 import styles from "./styles.module.css";
+import { DentistaContext } from '../../contexts/DentistaContext'
+import { useContext } from 'react'
+import { useEffect } from 'react'
 
 const Card = (props) => {
+
   const {dentista} = props;
+
+  const{getDentista} = useContext(DentistaContext);
+
+  useEffect(() => {
+    getDentista(dentista.matricula);
+  }, [])
+
  
   return (
     <>
