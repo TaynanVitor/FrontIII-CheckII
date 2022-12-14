@@ -2,11 +2,15 @@ import styles from "./styles.module.css";
 import { DentistaContext } from '../../contexts/DentistaContext'
 import { useContext } from 'react'
 import { useEffect } from 'react'
+import { themeContext } from '../../contexts/ThemeProvider';
+
+
 
 const Card = (props) => {
 
   const {dentista} = props;
 
+  const { theme } = useContext(themeContext)
   const{getDentista} = useContext(DentistaContext);
 
   useEffect(() => {
@@ -18,7 +22,7 @@ const Card = (props) => {
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
-      <div className={`card`}>
+      <div className={theme === "light" ? `card` : `card dark ${styles.cardDark}`}>
         <img
           className="card-img-top"
           src="/images/doctor.jpg"
@@ -29,7 +33,7 @@ const Card = (props) => {
             <h5 className={`card-title ${styles.title}`}>{dentista.nome}</h5>
           </a>
             <p className={`card-title ${styles.title}`}>{dentista.sobrenome}</p>
-          <button>Favoritar</button>
+          <button className={`btn btn-light ${styles.button}`} >Favoritar</button>
         </div>
       </div>
     </>

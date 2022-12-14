@@ -5,8 +5,11 @@ import { useEffect } from 'react'
 import { DentistaContext } from '../../contexts/DentistaContext'
 import { useParams } from 'react-router-dom'
 import { useContext } from 'react'
+import { themeContext } from '../../contexts/ThemeProvider';
 
 const DetailCard = (props) => {
+
+  const { theme } = useContext(themeContext)
 
   const { dentista } = props;
 
@@ -25,7 +28,7 @@ const DetailCard = (props) => {
       <section className="card col-sm-12 col-lg-6 container">
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
-        <div className={`card-body row`}>
+        <div className={`card-body row ${theme} === "dark" ? 'cardDark' : 'card-body'`}>
           <div className="col-sm-12 col-lg-6">
             <img
               className="card-img-top"
@@ -49,7 +52,7 @@ const DetailCard = (props) => {
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                className={`btn btn-light ${styles.button}`}
+                className={`btn ${theme} === "dark" ? 'dark' : 'light'  btn-light ${styles.button}`}
               >
                 Marcar consulta
               </button>

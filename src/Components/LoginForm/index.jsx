@@ -4,10 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { themeContext } from '../../contexts/ThemeProvider'
 
 const LoginForm = () => {
 
   const navigate = useNavigate();
+
+  const { theme } = useContext(themeContext);
 
   // const{dentistas, dentista, getAllDentistas, getDentista} = useContext(DentistaContext);
 
@@ -47,9 +50,9 @@ const LoginForm = () => {
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
-      <div
-        className={`text-center card container ${styles.card}`}
-      >
+     <div className={theme === "light"
+            ? `text-center card container ${styles.card}`
+            : `text-center card container dark ${styles.card} ${styles.cardDark}`}>
         <div className={`card-body ${styles.CardBody}`}>
           <form onSubmit={handleSubmit}>
             <input

@@ -9,9 +9,12 @@ import { DentistaProvider } from './contexts/DentistaContext'
 import { Destacados } from './pages/Destacados'
 import { AuthContext } from './contexts/AuthContext'
 import AuthProvider from './contexts/AuthContext'
+import { ThemeProvider } from './contexts/ThemeProvider'
+
 
 export function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
     <DentistaProvider>
       <BrowserRouter>
@@ -29,6 +32,8 @@ export function App() {
       </BrowserRouter>
     </DentistaProvider>
     </AuthProvider>
+    </ThemeProvider>
+    
   )
 }
 
