@@ -1,6 +1,11 @@
-# ctd-fe3-template
+
 
 Exame Final de Frontend III
+
+Alunos: Nicholas Ruas Viegas, Ruggiero Stello, Taynan Vitor
+
+
+---------------------------------------------
 
 ## Índice
 * [Requisitos](#requisitos)
