@@ -1,21 +1,49 @@
-import { useContext, useEffect, useState } from "react";
-import styles from "./styles.module.css";
-import { themeContext } from '../../contexts/ThemeProvider'
+import { useContext, useState } from 'react'
+import { DentistaContext } from '../../Contexts/DentistaProvider'
+import { PacienteContext } from '../../Contexts/PacienteProvider'
+import { themeContext } from '../../Contexts/ThemeProvider'
+import api from '../../Services/api'
+import styles from './styles.module.css'
 
 const ScheduleForm = () => {
   const { theme } = useContext(themeContext);
-  useEffect(() => {
-    //Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
-    //e pacientes e carregar os dados em 2 estados diferentes
-  }, []);
+  const { dentistas, userToken } = useContext(DentistaContext)
+  const { pacientes } = useContext(PacienteContext)
+
+  const [dentistaForm, setDentistaForm] = useState('')
+  const [pacienteForm, setPacienteForm] = useState('')
+  const [dataConsulta, setDataConsulta] = useState('')
 
   const handleSubmit = (event) => {
-    //Nesse handlesubmit você deverá usar o preventDefault,
-    //obter os dados do formulário e enviá-los no corpo da requisição 
-    //para a rota da api que marca a consulta
-    //lembre-se que essa rota precisa de um Bearer Token para funcionar.
-    //Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
-  };
+    event.preventDefault()
+    schedule()
+    
+  }
+               
+  async function schedule() {
+    const data = {
+      paciente: {
+        matricula: pacienteForm
+      },
+      dentista: {
+        matricula: dentistaForm
+      },
+      dataHoraAgendamento: dataConsulta
+    }
+
+    try {
+      await api.post('/consulta', data, {
+        headers: {
+          Authorization: `Bearer ${userToken}`
+        }
+      })
+
+      alert('consulta agendada!')
+      
+    } catch (error) {
+      alert('Erro ao agendar a consulta' + error)
+    }
+  }
 
   return (
     <>
@@ -26,54 +54,64 @@ const ScheduleForm = () => {
           <div className={`row ${styles.rowSpacing}`}>
             <div className="col-sm-12 col-lg-6">
               <label htmlFor="dentist" className="form-label">
-                Dentist
+                Dentista
               </label>
-              <select className="form-select" name="dentist" id="dentist">
-                {/*Aqui deve ser feito um map para listar todos os dentistas*/}
-                <option key={'Matricula do dentista'} value={'Matricula do dentista'}>
-                  {`Nome Sobrenome`}
-                </option>
+              <select
+                className="form-select"
+                name="dentist"
+                id="dentist"
+                onChange={(event) => setDentistaForm(event.target.value)}
+              >
+                {dentistas.map((dentista) => (
+                  <option key={dentista.matricula} value={dentista.matricula}>
+                    {`${dentista.nome} ${dentista.sobrenome}`}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-sm-12 col-lg-6">
               <label htmlFor="patient" className="form-label">
-                Patient
+                Paciente
               </label>
-              <select className="form-select" name="patient" id="patient">
-                {/*Aqui deve ser feito um map para listar todos os pacientes*/}
-                <option key={'Matricula do paciente'} value={'Matricula do paciente'}>
-                  {`Nome Sobrenome`}
-                </option>
+              <select
+                className="form-select"
+                name="patient"
+                id="patient"
+                onChange={(event) => setPacienteForm(event.target.value)}
+              >
+                {pacientes.map((paciente) => (
+                  <option key={paciente.matricula} value={paciente.matricula}>
+                    {`${paciente.nome} ${paciente.sobrenome}`}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
           <div className={`row ${styles.rowSpacing}`}>
             <div className="col-12">
               <label htmlFor="appointmentDate" className="form-label">
-                Date
+                Data
               </label>
               <input
                 className="form-control"
                 id="appointmentDate"
                 name="appointmentDate"
                 type="datetime-local"
+                onChange={(event) => setDataConsulta(event.target.value)}
               />
             </div>
           </div>
           <div className={`row ${styles.rowSpacing}`}>
             {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-        // está em dark mode e deverá utilizar o css correto */}
-            <button
-              className={`btn btn-light ${theme} === "dark" ? ${'cardDark'} : 'card' ${styles.button}`}
-              type="submit"
-            >
-              Schedule
+            // está em dark mode e deverá utilizar o css correto */}
+            <button className={`btn btn-light ${theme} === "dark" ? ${'cardDark'} : 'card' ${styles.button}`}>
+              Agendar
             </button>
           </div>
         </form>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ScheduleForm;
+export default ScheduleForm

@@ -1,30 +1,18 @@
+import { useContext } from 'react';
+import { themeContext } from '../../Contexts/ThemeProvider';
 import ScheduleFormModal from '../ScheduleFormModal'
 
 import styles from './styles.modules.css'
-import { useEffect } from 'react'
-import { DentistaContext } from '../../contexts/DentistaContext'
-import { useParams } from 'react-router-dom'
-import { useContext } from 'react'
-import { themeContext } from '../../contexts/ThemeProvider';
 
 const DetailCard = (props) => {
-
   const { theme } = useContext(themeContext)
 
-  const { dentista } = props;
-
-  const { id } = useParams();
-  const{getDentista} = useContext(DentistaContext);
-
-  useEffect(() => {
-    getDentista(id);
-  }, [])
+  const {dentista} = props;
+  console.log(dentista)
 
   return (
-    //As instruções que estão com {''} precisam ser
-    //substituídas com as informações que vem da api
     <>
-      <h1>Details about Dentist {dentista.nome}</h1>
+      <h1>Detalhe sobre o dentista {dentista.nome}</h1>
       <section className="card col-sm-12 col-lg-6 container">
         {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
@@ -38,17 +26,17 @@ const DetailCard = (props) => {
           </div>
           <div className="col-sm-12 col-lg-6">
             <ul className="list-group">
-              <li className="list-group-item">Nome: {dentista.nome}</li>
+              <li className="list-group-item"><strong>Nome: </strong> {dentista.nome}</li>
               <li className="list-group-item">
-                Sobrenome: {dentista.sobrenome}
+              <strong>Sobrenome:</strong> {dentista.sobrenome}
               </li>
+              <li className="list-group-item"><strong>Matricula: </strong> {dentista.matricula}</li>
               <li className="list-group-item">
-                {/* Usuário: {dentista.usuario.username} */}
+                {/* <strong>Usuário:</strong> {dentista.usuario.username} ***FAVOR NOTAR QUE O CAMINHO ESTÁ ACUSANDO COMO UNDEFINED E QUEBRANDO A APLICAÇÃO** */}
+                
               </li>
             </ul>
             <div className="text-center">
-              {/* //Na linha seguinte deverá ser feito um teste se a aplicação
-              // está em dark mode e deverá utilizado o css correto */}
               <button
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
@@ -65,5 +53,4 @@ const DetailCard = (props) => {
   )
 }
 
-// `${dentista.usuario}`
 export default DetailCard

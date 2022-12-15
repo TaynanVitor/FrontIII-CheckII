@@ -1,86 +1,82 @@
-import api from "../../Services/api";
-import styles from "./styles.module.css";
-import { ToastContainer, toast } from "react-toastify";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";
-import { themeContext } from '../../contexts/ThemeProvider'
+import { useContext, useState } from 'react'
+import api from '../../Services/api'
+import { DentistaContext } from '../../Contexts/DentistaProvider'
+import { themeContext } from '../../Contexts/ThemeProvider'
+import { useNavigate } from 'react-router-dom'
+import { FaUserAlt } from 'react-icons/fa'
+
+import styles from './styles.module.css'
 
 const LoginForm = () => {
-
+  const { theme } = useContext(themeContext);
+  const {saveToken} = useContext(DentistaContext);
   const navigate = useNavigate();
 
-  const { theme } = useContext(themeContext);
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
 
-  // const{dentistas, dentista, getAllDentistas, getDentista} = useContext(DentistaContext);
+  const handleSubmit = (e) => {
+    e.preventDefault()
 
-  const {userData, fillUserDataState} = useContext(AuthContext);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await auth();
+    auth()
   }
-  
-  async function auth(){
-    console.log(auth);
-    
+
+  async function auth() {
     try {
-      const response = await api.post("/auth", {
-        username: username,
-        password: password,
-      });
-      localStorage.setItem("token", response.data.token)
-      toast("Autenticação realizada com sucesso!", {type: "success"});
-      alert("Autenticação realizada com sucesso!");
-      navigate("/home");
-      fillUserDataState({
-        username: response.data.username,
-        token: response.data.token,
-        password: response.data.password,
-      });
+      const response = await api.post('/auth', {
+        "username": user,
+        "password": password
+      })
       
+      saveToken(response.data.token)
+
+      
+      navigate("/home")
+
+      alert("Bem-vindo a DH Odonto!")
+
     } catch (error) {
-      toast.error("Erro de autenticação", {position: "bottom-center" });
-      }
+      
+      alert('Erro ao logar ' + error)
     }
+  }
 
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
-     <div className={theme === "light"
-            ? `text-center card container ${styles.card}`
-            : `text-center card container dark ${styles.card} ${styles.cardDark}`}>
+      <div className={`text-center card container ${theme} === "dark" ? ${'cardDark'} : 'card' ${styles.card}`}>
         <div className={`card-body ${styles.CardBody}`}>
+          <h1>
+            <FaUserAlt />
+            Login
+          </h1>
           <form onSubmit={handleSubmit}>
             <input
-              value = {username}
-              onChange={(event) => setUsername(event.target.value)}
               className={`form-control ${styles.inputSpacing}`}
-              placeholder="Login"
+              value={user}
+              onChange={(event) => setUser(event.target.value)}
+              placeholder="digite o usuario"
               name="login"
               required
             />
             <input
-              value = {password}
-              onChange={(event) => setPassword(event.target.value)}
               className={`form-control ${styles.inputSpacing}`}
-              placeholder="Password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="senha"
               name="password"
               type="password"
               required
             />
             <button className="btn btn-primary" type="submit">
-              Send
+              Enviar
             </button>
           </form>
         </div>
-        <ToastContainer />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

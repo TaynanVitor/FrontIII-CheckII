@@ -1,10 +1,9 @@
 import { useContext } from 'react'
 import Card from '../Components/Card'
-import { DentistaContext } from '../contexts/DentistaContext'
+import { DentistaContext } from '../Contexts/DentistaProvider'
 
 const Home = () => {
-
-  const{dentistas, dentista, getAllDentistas, getDentista} = useContext(DentistaContext);
+  const { dentistas } = useContext(DentistaContext);
 
   return (
     <>
@@ -20,4 +19,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default Home

@@ -1,40 +1,20 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { Contato } from './pages/Contato'
-import Detail from './pages/Detail'
-import Home from './pages/Home'
-import Navbar from './Components/Navbar/index.jsx'
-import Footer from './Components/Footer'
-import LoginForm from './Components/LoginForm'
-import { DentistaProvider } from './contexts/DentistaContext'
-import { Destacados } from './pages/Destacados'
-import { AuthContext } from './contexts/AuthContext'
-import AuthProvider from './contexts/AuthContext'
-import { ThemeProvider } from './contexts/ThemeProvider'
 
+import { useContext } from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "./Components/Footer";
+import Navbar from "./Components/Navbar";
+import { themeContext } from "./Contexts/ThemeProvider";
 
 export function App() {
+  const { theme } = useContext(themeContext);
+
   return (
-    <ThemeProvider>
-    <AuthProvider>
-    <DentistaProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/dentista/:id" element={<Detail />} />
-          <Route path="/contato" element={<Contato />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/destacados" element={<Destacados />} />
-          <Route path="*" element={<h1>PAGE NOT FOUND</h1>}/>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-    </DentistaProvider>
-    </AuthProvider>
-    </ThemeProvider>
-    
+    <div className={theme === "light" ? `app flight` : `app dark`}>
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   )
 }
-
-export default App;

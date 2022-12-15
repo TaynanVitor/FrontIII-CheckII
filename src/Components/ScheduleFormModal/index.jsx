@@ -1,9 +1,10 @@
-import ScheduleForm from '../ScheduleForm'
-import { themeContext } from '../../contexts/ThemeProvider';
 import { useContext } from 'react';
+import { themeContext } from '../../Contexts/ThemeProvider';
+import ScheduleForm from '../ScheduleForm'
 
 const ScheduleFormModal = () => {
   const { theme } = useContext(themeContext);
+
   return (
     <div
       className={`modal fade`}
@@ -22,7 +23,7 @@ const ScheduleFormModal = () => {
             </h1>
             {/* //Na linha seguinte deverá ser feito um teste se a aplicação
             // está em dark mode e deverá utilizado o css correto */}
-           <button
+            <button
               type="button"
               className={`btn-close ${theme} === "dark" ? ${'closeButtonDark'} : 'card'`}
               data-bs-dismiss="modal"

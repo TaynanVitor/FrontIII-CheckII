@@ -1,29 +1,21 @@
 .navbarBrand {
-  font-size: 30px;
-}
-
+    font-size: 30px;
+  }
+  
 .navbarBrand::first-letter {
-  color: #f21d1d;
+    color: #f21d1d;
 }
-
-.bgLight{
-  background-color: #f7f7f7;
-}
-
-.bgDark {
-  background-color: #2D333B;  
-}
-
+  
 .navBarLink {
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 9px;
-  font-weight: bold;
-  transition: all 0.3s ease-in-out;
-  font-weight: 700;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 9px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    font-weight: 700;
 }
-
-.btnStyle{
-  width: 3rem;
-  height: 3rem;
-}
+  
+  .btnStyle{
+    width: 3rem;
+    height: 3rem;
+  }

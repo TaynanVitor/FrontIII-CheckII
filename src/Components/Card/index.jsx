@@ -1,43 +1,52 @@
-import styles from "./styles.module.css";
-import { DentistaContext } from '../../contexts/DentistaContext'
+import { AiOutlineStar } from 'react-icons/ai'
 import { useContext } from 'react'
-import { useEffect } from 'react'
-import { themeContext } from '../../contexts/ThemeProvider';
+import { PacienteContext } from '../../Contexts/PacienteProvider'
 
-
+import styles from './styles.module.css'
+import { themeContext } from '../../Contexts/ThemeProvider'
 
 const Card = (props) => {
+  const { theme } = useContext(themeContext);
+  const { saveFavoritos } = useContext(PacienteContext);
 
-  const {dentista} = props;
+  const { dentista } = props
 
-  const { theme } = useContext(themeContext)
-  const{getDentista} = useContext(DentistaContext);
+  function favoritarCard() {
+    //Fazer aqui um toggle para desfavoritar
+    saveFavoritos({
+      nome: dentista.nome,
+      sobrenome: dentista.sobrenome,
+      matricula: dentista.matricula
+    })
 
-  useEffect(() => {
-    getDentista(dentista.matricula);
-  }, [])
+  }
 
- 
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
-      <div className={theme === "light" ? `card` : `card dark ${styles.cardDark}`}>
+      <div className={`'card' ${theme} === "dark" ? ${'cardDark'} : 'card'` }>
         <img
           className="card-img-top"
           src="/images/doctor.jpg"
           alt="doctor placeholder"
         />
         <div className={`card-body ${styles.CardBody}`}>
-          <a href={`/dentista/${dentista.matricula}`}>
+          <a href={`/dentist/${dentista.matricula}`}>
             <h5 className={`card-title ${styles.title}`}>{dentista.nome}</h5>
           </a>
-            <p className={`card-title ${styles.title}`}>{dentista.sobrenome}</p>
-          <button className={`btn btn-light ${styles.button}`} >Favoritar</button>
+          <p className={`card-title ${styles.title}`}>{dentista.sobrenome}</p>
+          <button
+            onClick={favoritarCard}
+            className={`btn btn-light ${styles.button}`}
+          >
+            <AiOutlineStar />
+            Favoritar
+          </button>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Card;
+export default Card
