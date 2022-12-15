@@ -2,10 +2,16 @@
 
 Exame Final de Frontend III
 
-Alunos: Nicholas Ruas Viegas, Ruggiero Stello, Taynan Vitor
+Alunos: Nicholas Ruas Viegas, Ruggiero Stello, Taynan Vitor Martins Souza
+
+
 
 
 ---------------------------------------------
+
+
+
+
 
 ## Índice
 * [Requisitos](#requisitos)
